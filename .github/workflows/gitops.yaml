@@ -1,0 +1,28 @@
+name: mariogame
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  
+    sonarqube-scan:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: SonarQube Scan
+          uses: sonarsource/sonarcloud-github-action@master
+          env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+        - name: sonarQube Quality Gate Check
+          uses: sonarsource/sonarcloud-github-action@master
+          timeout-minutes: 5
+    
+          env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              
